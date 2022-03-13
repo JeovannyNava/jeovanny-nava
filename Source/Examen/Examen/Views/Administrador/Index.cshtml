@@ -1,0 +1,92 @@
+﻿@model List<Examen.Models.Receta>
+@{
+
+    ViewData["Title"] = "Administador de recetas";
+}
+<h1>@ViewData["Title"]</h1>
+
+
+<div class="float-right pb-5">
+    <a class="btn btn-success" asp-area="" asp-controller="Administrador" asp-action="receta" asp-route-IdReceta="0">Nueva Receta</a>
+</div>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+
+            <th scope="col">Nombre</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Fecha de creación</th>
+            <th scope="col">Fecha de actualización</th>
+            <th scope="col">Editar</th>
+            <th scope="col">Eliminar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var receta in Model)
+        {
+            <tr>
+
+                <td>@receta.Nombre</td>
+                <td>@receta.Descripcion</td>
+                <td>@receta.FechaCreacion.ToShortDateString()</td>
+                <td>@receta.FechaActualizacion.ToShortDateString()</td>
+                <th scope="row"><a class="btn btn-primary" asp-action="Receta" asp-controller="Administrador" asp-route-IdReceta="@receta.IdReceta">Editar</a></th>
+                <th scope="row"><button class="btn btn-danger" onclick="eliminarReceta(@receta.IdReceta)">Eliminar</button></th>
+
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+@section scripts{
+
+    <script>
+
+
+        var eliminarReceta = (IdReceta) => {
+
+            swal({
+                title: "Estás seguro de que quieres eliminar esta receta?",
+                text: "Se eliminará por completo esta receta y no podrás recuperarla",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((confirmar) => {
+                if (confirmar) {
+
+                    let data = {
+                        IdReceta: IdReceta
+                    };
+                    $.ajax({
+                        type: "POST",
+                        url: "/Administrador/EliminarReceta",
+                        data: data,
+                        async: false,
+                        cache: false,
+                        success: function (data) {
+                            if (data.response == "Ok") {
+                                swal({
+                                    title: "Listo",
+                                    text: "Cambios guardados exitosamente.",
+                                    icon: "success",
+                                    button: "Aceptar",
+                                }).then((value) => {
+                                    window.location.reload();
+                                })
+                            } else {
+                                swal("Error", "Error de comunicación con el servidor", "error");
+                            }
+                        },
+                        error: function (jqXhr, textStatus, errorThrown) {
+                            swal("Error", "Error de comunicación con el servidor", "error");
+
+                        }
+                    });
+                }
+            });
+
+        }
+
+    </script>
+}

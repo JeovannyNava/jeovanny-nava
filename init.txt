@@ -1,0 +1,21 @@
+Para montar el proyecto debe seguir los siguientes pasos
+
+Abra la solución  llamada examen
+Vaya al archivo "appsettings.json" y cambie el valor de "Source" por su instancia de SQL Server, dicho valor se encuentra en la propiedad "default" en el elemento "ConnectionStrings"
+En Visual Studio abra una venta de admistrador de paquetes nuguets y ejecute el siguiente comando "Update-Database", esto creará la base de datos con las tablas necesarias para iniciar el proyecto
+Ejecute  los sigiuentes scripts que se encuentran en la carpeta "db" en el siguiente orden
+1 "DATA_TABLE_TYPE" 
+2 "SP_GET_RECETAS"
+3 "SP_INSERT_INGREDIENTES"
+4 "SP_INSERT_RECETA"
+5 "SP_UPDATE_RECETA"
+6 "SP_DELETE_RECETA"
+
+Una vez que haya ejecutado todos los scripts de la base de datos, inicie el proyecto, de esta manera el proyecto debería arrancar sin problemas
+Para crear un administrador, usted tiene dos opciones
+1 Ejecutar el script "CREAR_ADMINISTRADOR" y usted podrá acceder con el correo : prueba@gmail.com y la contraseña : Abcd-12345
+2 En la aplicación web, hay una opción que dice "Registrarse", haga click en dicha opción y registrese con un correo y contraseña, la cual deberá contener una mayuscula, una caracter especial y minimo 8 caracteres en total. De esta manera usted habrá creado un usuario administrador
+
+Una vez creado el usuario administrador, usted podrá acceder a través de un login a la aplicación web como usuario administrador, la cual le dará las opciones para crear recetas, editarlas y eliminarlas y cuando existan recetas, estas se verán en la pantalla del home
+
+

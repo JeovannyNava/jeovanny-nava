@@ -1,0 +1,80 @@
+﻿@model List<Examen.Models.Ingrediente>
+<div class="row mt-5">
+    <div class="col-12">
+        <h4>Ingredientes</h4>
+    </div>
+    <div class="col-6">
+        <label>Nombre del ingrediente</label>
+        <input name="ingrediente" id="ingrediente" type="text" class="form-control" />
+
+        <button class="btn btn-primary mt-3" id="addIng">Añadir Ingrediente</button>
+    </div>
+    <div class="col-6">
+
+        <table class="table" id="tableIngredientes">
+            <thead>
+                <tr>
+                    
+                    <th scope="col">Nombre</th>
+                   
+                    
+                    <th scope="col">Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var ingrediente in Model)
+            {
+                <tr>
+                    <td>@ingrediente.Nombre</td>
+                    
+                    <th scope="row"><button class="btn btn-danger">Eliminar</button></th>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts{ 
+<script>
+    document.getElementById("addIng").onclick = function () { AddIngrediente() };
+
+    function AddIngrediente() {
+        let nombreIngrediente = $("#ingrediente").val();
+        if (nombreIngrediente.length == 0 ) {
+            swal("Datos incompletos", "Es necesario escribir un nombre para el ingrediente", "warning");
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/Administrador/AddIngrediente",
+           
+            data: { Nombre: nombreIngrediente },
+            async: false,
+            cache: false,
+            success: function (data) {
+                if (data.response == "ok") {
+                    swal({
+                        title: "Listo",
+                        text: "Cambios guardados exitosamente.",
+                        icon: "success",
+                        button: "Aceptar",
+                    }).then((value) => {
+                      
+                        window.location.reload();
+
+                    })
+                } else {
+                    swal("Error", "Error de comunicación con el servidor", "error");
+                }
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                swal("Error", "Error de comunicación con el servidor", "error");
+
+            }
+        });
+        
+    }
+</script>
+}

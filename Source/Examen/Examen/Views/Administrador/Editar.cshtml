@@ -1,0 +1,81 @@
+﻿@model Examen.Models.Receta
+
+    <div class="container mt-3">
+        <form id="form-receta">
+            <div class="row">
+
+                <div class="col-6">
+
+                    <label>Nombre</label>
+                    <input id="nombre" name="nombre" type="text" class="form-control" value="@Model.Nombre"/>
+                </div>
+                <div class="col-6">
+                    <label>Descripcion</label>
+                    <textarea id="descripcion" name="descripcion" class="form-control">@Model.Descripcion</textarea>
+                </div>
+                <div class="col-6">
+
+                    <label class="btn btn-secondary mt-3 ml-3" for="imagen">Subir imagen &nbsp; <img src="~/assets/img/upload.png" /></label>
+                    <input lang="es" name="imagen" id="imagen" style="visibility: hidden;" type="file" accept=".jpg,.png,.jpeg">
+                </div>
+                <div class="col-6 text-center">
+                    <img id="imagenPrevisualizacion" class="mt-4 mr-3 img-fluid" style="max-height:200px" />
+                </div>
+
+            </div>
+        </form>
+
+        <div class="row mt-5">
+            <div class="col-12">
+                <h4>Ingredientes</h4>
+            </div>
+            <div class="col-6">
+                <label>Nombre del ingrediente</label>
+                <input name="ingrediente" id="ingrediente" type="text" class="form-control" />
+                <label>Porción</label>
+                <input name="porcion" id="porcion" type="text" class="form-control" />
+                <button class="btn btn-primary mt-3" id="addIng">Añadir Ingrediente</button>
+            </div>
+            <div class="col-6">
+
+                <table class="table" id="tableIngredientes">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Porcion</th>
+                            <th scope="col">Editar</th>
+                            <th scope="col">Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="float-lg-right pt-4">
+            <button class="btn btn-success" id="subirReceta">Subir receta</button>
+        </div>
+    </div>
+    <div class="modal" tabindex="-1" role="dialog" id="modalIngrediente">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Ingrediente</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label>Nombre del ingrediente</label>
+                    <input name="editNombreIngrediente" id="editNombreIngrediente" type="text" class="form-control" />
+                    <label>Porción</label>
+                    <input name="editPorcionIngrediente" id="editPorcionIngrediente" type="text" class="form-control" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="editarIngrediente" onclick="editarIngrediente()">Editar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>

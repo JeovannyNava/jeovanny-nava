@@ -1,0 +1,75 @@
+﻿@model List<Examen.Models.Receta>
+
+@{
+    ViewData["Title"] = "Home Page";
+
+
+}
+
+<div class="text-center">
+    <h1 class="display-4">Recetario de Jeovanny</h1>
+
+</div>
+<div class="text-center mt-5">
+    <h4>Nuestra última receta</h4>
+    <img class="rounded mx-auto d-block"  src="@ViewBag.UltimaReceta?.Imagen" style="max-height:300px"/>
+    <p>@ViewBag.UltimaReceta?.Nombre</p>
+</div>
+<section>
+    <div class="container mt-5">
+        <h4 class="text-center">Todas las recetas</h4>
+        <div id="carousel" class="carousel slide mt-4" data-ride="carousel">
+            <div class="carousel-inner">
+
+                @{ int go = 0;
+                    string cl = "";
+                }
+                @foreach (var receta in Model)
+                {
+                    cl = go == 0 ? "active" : "";
+
+
+                    <div class="carousel-item @cl">
+                        <div class="row">
+                            <div class="col-6">
+                                <img class="d-block w-100" src="@receta.Imagen" alt="@receta.Nombre" style="width:300px">
+                            </div>
+                            <div class="col-6">
+                                <h5 class="alert-info">Ingredientes</h5>
+                                <ul class="list-group">
+                                    @foreach (var ingrediente in receta.Ingredientes)
+                                    {
+                                        <li class="list-group-item">
+                                            @ingrediente.Nombre
+                                        </li>
+                                    }
+                                </ul>
+
+                            </div>
+                            <div class="col-12 m-3 pb-3">
+                                <div class="text-center border-info">
+                                    <p id="resumenDescripcion"><b>@(receta.Descripcion.Length>499?(receta.Descripcion.Substring(0,500) + "..."): receta.Descripcion) </b></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    go++;
+                }
+
+
+            </div>
+
+        </div>
+        <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+            <i class="fa-solid fa-angle-right"></i>
+        </a>
+        <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+            <i class="fa-solid fa-angle-left"></i>
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</section>
